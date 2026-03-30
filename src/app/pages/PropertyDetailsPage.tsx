@@ -483,4 +483,387 @@ export function PropertyDetailsPage() {
                     style={{ transform: `translateX(-${amenityIndex * (100 / AMENITY_VISIBLE)}%)` }}
                   >
                     {property.amenityImages.map((amenity, i) => (
-                      
+                      <div key={i} className="flex-shrink-0 w-[calc(25%-12px)]">
+                        <div className="rounded-xl overflow-hidden mb-2 h-40">
+                          <img
+                            src={amenity.image}
+                            alt={amenity.name}
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                        <p className="text-sm text-center text-gray-700 font-medium">{amenity.name}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {amenityIndex > 0 && (
+                  <button
+                    onClick={() => setAmenityIndex((p) => Math.max(0, p - 1))}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow hover:bg-[#E63946] hover:text-white hover:border-[#E63946] transition-colors z-10"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                )}
+                {amenityIndex < property.amenityImages.length - AMENITY_VISIBLE && (
+                  <button
+                    onClick={() => setAmenityIndex((p) => Math.min(property.amenityImages.length - AMENITY_VISIBLE, p + 1))}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow hover:bg-[#E63946] hover:text-white hover:border-[#E63946] transition-colors z-10"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+            </section>
+
+            {/* ── HIGHLIGHTS ── */}
+            <section id="highlights" className="mb-14 scroll-mt-36">
+              <h2
+                className="text-2xl text-[#1A1A1A] mb-6"
+                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
+              >
+                Highlights
+              </h2>
+              <div className="relative">
+                <div className="overflow-hidden">
+                  <div
+                    className="flex gap-4 transition-transform duration-300"
+                    style={{ transform: `translateX(-${highlightIndex * (100 / HIGHLIGHT_VISIBLE)}%)` }}
+                  >
+                    {property.highlightIcons.map((h, i) => {
+                      const Icon = ICON_MAP[h.icon] || ShieldCheck;
+                      return (
+                        <div
+                          key={i}
+                          className="flex-shrink-0 w-[calc(25%-12px)] bg-[#FFF5F6] border border-[#E63946]/20 rounded-2xl p-5 flex flex-col items-center gap-3 hover:shadow-md transition-shadow"
+                        >
+                          <div className="w-14 h-14 rounded-full bg-white border border-[#E63946]/30 flex items-center justify-center">
+                            <Icon className="w-7 h-7 text-[#E63946]" />
+                          </div>
+                          <p className="text-sm text-center text-[#1A1A1A] font-medium leading-snug">{h.label}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                {highlightIndex > 0 && (
+                  <button
+                    onClick={() => setHighlightIndex((p) => Math.max(0, p - 1))}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow hover:bg-[#E63946] hover:text-white hover:border-[#E63946] transition-colors z-10"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                )}
+                {highlightIndex < property.highlightIcons.length - HIGHLIGHT_VISIBLE && (
+                  <button
+                    onClick={() => setHighlightIndex((p) => p + 1)}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow hover:bg-[#E63946] hover:text-white hover:border-[#E63946] transition-colors z-10"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+            </section>
+
+            {/* ── GALLERY ── */}
+            <section id="gallery" className="mb-14 scroll-mt-36">
+              <h2
+                className="text-2xl text-[#1A1A1A] mb-6"
+                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
+              >
+                Gallery
+              </h2>
+              <div className="relative rounded-2xl overflow-hidden mb-4 h-[380px] bg-black">
+                <img
+                  src={property.images[currentImageIndex]}
+                  alt={property.title}
+                  className="w-full h-full object-cover opacity-95"
+                />
+                {property.images.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => setCurrentImageIndex((p) => (p - 1 + property.images.length) % property.images.length)}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/90 rounded-full flex items-center justify-center hover:bg-white hover:text-[#E63946] transition-colors shadow"
+                    >
+                      <ChevronLeft className="w-6 h-6" />
+                    </button>
+                    <button
+                      onClick={() => setCurrentImageIndex((p) => (p + 1) % property.images.length)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 bg-white/90 rounded-full flex items-center justify-center hover:bg-white hover:text-[#E63946] transition-colors shadow"
+                    >
+                      <ChevronRight className="w-6 h-6" />
+                    </button>
+                    <div className="absolute bottom-4 right-4 bg-black/60 text-white text-xs px-3 py-1 rounded-full">
+                      {currentImageIndex + 1} / {property.images.length}
+                    </div>
+                  </>
+                )}
+              </div>
+              <div className="flex gap-3">
+                {property.images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentImageIndex(i)}
+                    className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
+                      i === currentImageIndex ? 'border-[#E63946]' : 'border-transparent'
+                    }`}
+                  >
+                    <img src={img} alt={`View ${i + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {/* ── FAQ ── */}
+            <section id="faq" className="mb-14 scroll-mt-36">
+              <h2
+                className="text-2xl text-[#1A1A1A] mb-6"
+                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
+              >
+                FAQ
+              </h2>
+              <div className="space-y-3">
+                {property.faq.map((item, i) => (
+                  <div key={i} className="border border-gray-200 rounded-xl overflow-hidden">
+                    <button
+                      onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                      className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-[#FFF5F6] transition-colors"
+                    >
+                      <span className="font-medium text-[#1A1A1A] text-sm pr-4">{item.question}</span>
+                      <span className="text-[#E63946] text-xl font-bold flex-shrink-0">
+                        {openFaq === i ? '−' : '+'}
+                      </span>
+                    </button>
+                    {openFaq === i && (
+                      <div className="px-6 pb-5 text-sm text-gray-700 leading-relaxed border-t border-gray-100 pt-4">
+                        {item.answer}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* ── OTHER PROJECTS ── */}
+            <section className="mb-8">
+              <h2
+                className="text-2xl text-[#E63946] mb-4"
+                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
+              >
+                Other Properties
+              </h2>
+
+              {/* Filter tabs */}
+              <div className="flex flex-wrap gap-3 mb-6">
+                {[
+                  { value: 'all', label: 'All' },
+                  { value: 'under-construction', label: 'Under Construction' },
+                  { value: 'ready-to-move', label: 'Ready to Move' },
+                  { value: 'available', label: 'Available' },
+                ].map((f) => (
+                  <button
+                    key={f.value}
+                    onClick={() => setOtherFilter(f.value)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      otherFilter === f.value
+                        ? 'bg-[#E63946] text-white'
+                        : 'bg-[#F5F5F5] text-gray-600 hover:bg-[#E63946]/10'
+                    }`}
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {otherProperties.slice(0, 3).map((prop) => (
+                  <PropertyCard key={prop.id} property={prop} />
+                ))}
+              </div>
+              {otherProperties.length === 0 && (
+                <div className="text-center py-10 text-gray-400">No properties found for this filter.</div>
+              )}
+            </section>
+          </div>
+
+          {/* ─── RIGHT STICKY SIDEBAR ─── */}
+          <aside className="lg:w-80 flex-shrink-0">
+            <div className="sticky top-36 space-y-4">
+
+              {/* Enquire Now card */}
+              <div className="bg-[#E63946] rounded-xl p-5 text-white">
+                <h3
+                  className="text-lg font-bold mb-4"
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
+                >
+                  Enquire Now
+                </h3>
+                <form onSubmit={handleEnquirySubmit} className="space-y-3">
+                  <input
+                    type="text"
+                    placeholder="Name*"
+                    value={enquiryForm.name}
+                    onChange={(e) => setEnquiryForm({ ...enquiryForm, name: e.target.value })}
+                    required
+                    className="w-full px-4 py-3 rounded-lg bg-white/20 placeholder-white/70 text-white border border-white/30 text-sm focus:outline-none focus:border-white"
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email*"
+                    value={enquiryForm.email}
+                    onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
+                    required
+                    className="w-full px-4 py-3 rounded-lg bg-white/20 placeholder-white/70 text-white border border-white/30 text-sm focus:outline-none focus:border-white"
+                  />
+                  <div className="flex items-center gap-2 bg-white/20 border border-white/30 rounded-lg px-3 py-3">
+                    <span className="text-sm">🇮🇳</span>
+                    <span className="text-white/70 text-sm">+91</span>
+                    <input
+                      type="tel"
+                      placeholder="Phone Number*"
+                      value={enquiryForm.phone}
+                      onChange={(e) => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
+                      required
+                      className="flex-1 bg-transparent placeholder-white/70 text-white text-sm focus:outline-none"
+                    />
+                  </div>
+                  <label className="flex items-start gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={enquiryForm.agreed}
+                      onChange={(e) => setEnquiryForm({ ...enquiryForm, agreed: e.target.checked })}
+                      className="mt-1 accent-white"
+                    />
+                    <span className="text-xs text-white/80 leading-snug">
+                      I have read and understood the{' '}
+                      <span className="underline cursor-pointer">Privacy Policy</span> &{' '}
+                      <span className="underline cursor-pointer">Terms & Conditions</span>
+                    </span>
+                  </label>
+                  <button
+                    type="submit"
+                    className="w-full py-3 bg-white text-[#E63946] font-bold rounded-lg hover:bg-gray-100 transition-colors text-sm"
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
+                    Request Details
+                  </button>
+                </form>
+              </div>
+
+              {/* Planning to Visit card */}
+              <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                <h3
+                  className="text-base font-bold text-[#1A1A1A] mb-4"
+                  style={{ fontFamily: 'Poppins, sans-serif' }}
+                >
+                  Planning to Visit?
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-[#E63946] flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-gray-700">{realtorInfo.address}</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Phone className="w-5 h-5 text-[#E63946] flex-shrink-0" />
+                    <a
+                      href={`tel:${realtorInfo.whatsapp}`}
+                      className="text-sm text-[#E63946] font-medium hover:underline"
+                    >
+                      {realtorInfo.phone}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      {/* ── MOBILE STICKY BOTTOM BAR ── */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 p-3 flex gap-3">
+        <a
+          href={`tel:${realtorInfo.whatsapp}`}
+          className="flex-1 h-12 bg-[#1A1A1A] text-white rounded-lg flex items-center justify-center gap-2 text-sm font-semibold"
+        >
+          <Phone className="w-4 h-4" />
+          Call Agent
+        </a>
+        <button
+          onClick={() => setShowEnquiryModal(true)}
+          className="flex-1 h-12 bg-[#E63946] text-white rounded-lg flex items-center justify-center gap-2 text-sm font-semibold"
+        >
+          Enquire Now
+        </button>
+      </div>
+
+      {/* ── MOBILE ENQUIRY MODAL ── */}
+      {showEnquiryModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 p-4"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowEnquiryModal(false); }}
+        >
+          <div className="bg-white rounded-2xl w-full max-w-md p-6 relative">
+            <button
+              onClick={() => setShowEnquiryModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-[#E63946]"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3
+              className="text-lg font-bold text-[#1A1A1A] mb-5"
+              style={{ fontFamily: 'Poppins, sans-serif' }}
+            >
+              Enquire Now
+            </h3>
+            <form onSubmit={handleEnquirySubmit} className="space-y-3">
+              <input
+                type="text"
+                placeholder="Your Name*"
+                value={enquiryForm.name}
+                onChange={(e) => setEnquiryForm({ ...enquiryForm, name: e.target.value })}
+                required
+                className="w-full px-4 py-3 rounded-lg bg-[#F5F5F5] text-[#1A1A1A] text-sm focus:outline-none focus:ring-2 focus:ring-[#E63946]"
+              />
+              <input
+                type="email"
+                placeholder="Email Address*"
+                value={enquiryForm.email}
+                onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
+                required
+                className="w-full px-4 py-3 rounded-lg bg-[#F5F5F5] text-[#1A1A1A] text-sm focus:outline-none focus:ring-2 focus:ring-[#E63946]"
+              />
+              <div className="flex items-center gap-2 bg-[#F5F5F5] rounded-lg px-3 py-3">
+                <span className="text-sm">🇮🇳 +91</span>
+                <input
+                  type="tel"
+                  placeholder="Phone Number*"
+                  value={enquiryForm.phone}
+                  onChange={(e) => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
+                  required
+                  className="flex-1 bg-transparent text-[#1A1A1A] text-sm focus:outline-none"
+                />
+              </div>
+              <label className="flex items-start gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={enquiryForm.agreed}
+                  onChange={(e) => setEnquiryForm({ ...enquiryForm, agreed: e.target.checked })}
+                  className="mt-1 accent-[#E63946]"
+                />
+                <span className="text-xs text-gray-600 leading-snug">
+                  I have read and agree to the Privacy Policy & Terms & Conditions
+                </span>
+              </label>
+              <button
+                type="submit"
+                className="w-full py-3 bg-[#E63946] text-white font-bold rounded-lg hover:bg-[#d32f3d] transition-colors text-sm"
+              >
+                Request Details
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
