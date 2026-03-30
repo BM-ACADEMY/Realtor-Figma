@@ -206,8 +206,6 @@ export const properties: Property[] = [
     propertyType: 'Plot',
     bedrooms: 0,
     bathrooms: 0,
-    bedrooms: 0,
-    bathrooms: 0,
     image: chengalpattuImage,
     images: [
       chengalpattuImage,
@@ -354,8 +352,6 @@ export const properties: Property[] = [
     propertyType: 'Plot',
     bedrooms: 0,
     bathrooms: 0,
-    bedrooms: 0,
-    bathrooms: 0,
     image: guduvancheryImage,
     images: [
       guduvancheryImage,
@@ -445,8 +441,6 @@ export const properties: Property[] = [
     area: 21780, // 0.5 Acre
     type: 'For Sale',
     propertyType: 'Plot',
-    bedrooms: 0,
-    bathrooms: 0,
     bedrooms: 0,
     bathrooms: 0,
     image: mahabalipuramImage,
