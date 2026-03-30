@@ -5,6 +5,9 @@ import ecrImage from '@/assets/plots/ecr_oceanview.png';
 import omrImage from '@/assets/plots/omr_gated.png';
 import adyarImage from '@/assets/plots/adyar_luxury.png';
 import sholinganallurImage from '@/assets/plots/sholinganallur_commercial.png';
+import chengalpattuImage from '@/assets/plots/chengalpattu_investment.png';
+import guduvancheryImage from '@/assets/plots/guduvanchery_green.png';
+import mahabalipuramImage from '@/assets/plots/mahabalipuram_farmland.png';
 
 export interface AmenityItem {
   name: string;
@@ -203,10 +206,12 @@ export const properties: Property[] = [
     propertyType: 'Plot',
     bedrooms: 0,
     bathrooms: 0,
-    image: 'https://images.unsplash.com/photo-1542366810-7e471d87f96b?w=800&h=600&fit=crop',
+    bedrooms: 0,
+    bathrooms: 0,
+    image: chengalpattuImage,
     images: [
+      chengalpattuImage,
       'https://images.unsplash.com/photo-1542366810-7e471d87f96b?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1464146072230-91cabc968266?w=1200&h=800&fit=crop',
     ],
     amenities: ['Compound Wall', 'Black Top Roads', 'Eb Connectivity', 'Water Reservoir', 'Landscaped Parks'],
     amenityImages: [
@@ -349,10 +354,12 @@ export const properties: Property[] = [
     propertyType: 'Plot',
     bedrooms: 0,
     bathrooms: 0,
-    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop',
+    bedrooms: 0,
+    bathrooms: 0,
+    image: guduvancheryImage,
     images: [
+      guduvancheryImage,
       'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1200&h=800&fit=crop',
     ],
     amenities: ['Herb Garden', 'Lotus Pond', 'Yoga Deck', 'Jogging Track', 'Children Play Area', 'Eb Access'],
     amenityImages: [
@@ -440,10 +447,12 @@ export const properties: Property[] = [
     propertyType: 'Plot',
     bedrooms: 0,
     bathrooms: 0,
-    image: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&h=600&fit=crop',
+    bedrooms: 0,
+    bathrooms: 0,
+    image: mahabalipuramImage,
     images: [
+      mahabalipuramImage,
       'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1200&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&h=800&fit=crop',
     ],
     amenities: ['Fencing', 'Drip Irrigation', 'Borewell', 'Manpower Support', 'Pre-planted Trees', 'Eb Access'],
     amenityImages: [
