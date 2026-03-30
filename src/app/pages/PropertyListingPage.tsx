@@ -60,10 +60,10 @@ export function PropertyListingPage() {
             className="text-4xl text-[#1A1A1A] mb-2"
             style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
           >
-            Find Your Perfect Property
+            Find Your Perfect Plot
           </h1>
           <p className="text-gray-600 text-lg">
-            Browse {filteredProperties.length} properties available
+            Browse {filteredProperties.length} verified plots available
           </p>
         </div>
       </div>
@@ -117,16 +117,14 @@ export function PropertyListingPage() {
 
                 {/* Property Type */}
                 <div>
-                  <label className="block text-sm text-[#1A1A1A] mb-2">Property Type</label>
+                  <label className="block text-sm text-[#1A1A1A] mb-2">Land Type</label>
                   <select
                     value={filters.propertyType}
                     onChange={(e) => setFilters({ ...filters, propertyType: e.target.value })}
                     className="w-full h-12 px-4 bg-[#F5F5F5] rounded-lg border-none outline-none"
                   >
-                    <option value="">All Types</option>
-                    <option value="Flat">Flat</option>
-                    <option value="Villa">Villa</option>
-                    <option value="Plot">Plot</option>
+                    <option value="">All Plots</option>
+                    <option value="Plot">Residential Plot</option>
                   </select>
                 </div>
 

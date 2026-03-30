@@ -1,37 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import {
-  Search,
-  MapPin,
-  Home,
-  IndianRupee,
-  Award,
-  CheckCircle2,
-  Star,
-  Phone,
-  Mail,
-  Send,
-} from 'lucide-react';
+import { Award, CheckCircle2, Star, Phone, Mail, Send } from 'lucide-react';
 import { PropertyCard } from '../components/PropertyCard';
 import { properties, testimonials, realtorInfo } from '../data/mockData';
-import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
-import { Select } from '../components/ui/select';
 import { Textarea } from '../components/ui/textarea';
 import { toast } from 'sonner';
 
 export function HomePage() {
-  const [searchLocation, setSearchLocation] = useState('');
-  const [searchType, setSearchType] = useState('');
-  const [searchBudget, setSearchBudget] = useState('');
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const [contactForm, setContactForm] = useState({ name: '', phone: '', message: '' });
+
+  const heroImages = [
+    'https://images.unsplash.com/photo-1706808849827-7366c098b317?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBtb2Rlcm4lMjBob3VzZSUyMGV4dGVyaW9yfGVufDF8fHx8MTc3NDg0OTYzNnww&ixlib=rb-4.1.0&q=80&w=1920',
+    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&h=1080&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1920&h=1080&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920&h=1080&fit=crop&q=80',
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentBgIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000); // 5 seconds
+    return () => clearInterval(timer);
+  }, []);
 
   const featuredProperties = properties.filter((p) => p.featured);
 
-  const handleSearch = () => {
-    // In production, this would filter properties based on search criteria
-    toast.success('Searching properties...');
-  };
+
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,74 +38,37 @@ export function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section
-        className="relative h-[600px] md:h-[700px] bg-cover bg-center flex items-center"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1706808849827-7366c098b317?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBtb2Rlcm4lMjBob3VzZSUyMGV4dGVyaW9yfGVufDF8fHx8MTc3NDg0OTYzNnww&ixlib=rb-4.1.0&q=80&w=1080')`,
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <section className="relative h-[600px] md:h-[700px] overflow-hidden flex items-center">
+        {/* Background Carousel */}
+        <div className="absolute inset-0 z-0">
+          {heroImages.map((img, idx) => (
+            <div
+              key={img}
+              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-[2000ms] ease-in-out ${
+                idx === currentBgIndex ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-110'
+              }`}
+              style={{
+                backgroundImage: `url('${img}')`,
+              }}
+            />
+          ))}
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-20" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-30">
           <div className="text-center text-white mb-12">
             <h1
               className="text-5xl md:text-6xl mb-6"
               style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
             >
-              Find Your Dream Property
+              Build Your Dream Home
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 mb-8">
-              Buy, Sell & Rent with a Trusted Realtor
+              Buy & Sell Verified Plots with the Trusted Land Expert
             </p>
 
-            {/* Search Bar */}
-            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-2xl max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <Input
-                    type="text"
-                    placeholder="Location"
-                    value={searchLocation}
-                    onChange={(e) => setSearchLocation(e.target.value)}
-                    className="pl-10 h-12 bg-[#F5F5F5] border-none"
-                  />
-                </div>
-                <div className="relative">
-                  <Home className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <select
-                    value={searchType}
-                    onChange={(e) => setSearchType(e.target.value)}
-                    className="w-full h-12 pl-10 pr-4 bg-[#F5F5F5] rounded-lg border-none outline-none text-[#1A1A1A]"
-                  >
-                    <option value="">Property Type</option>
-                    <option value="flat">Flat</option>
-                    <option value="villa">Villa</option>
-                    <option value="plot">Plot</option>
-                  </select>
-                </div>
-                <div className="relative">
-                  <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <select
-                    value={searchBudget}
-                    onChange={(e) => setSearchBudget(e.target.value)}
-                    className="w-full h-12 pl-10 pr-4 bg-[#F5F5F5] rounded-lg border-none outline-none text-[#1A1A1A]"
-                  >
-                    <option value="">Budget</option>
-                    <option value="0-50l">₹0 - ₹50 Lakh</option>
-                    <option value="50l-1cr">₹50 Lakh - ₹1 Cr</option>
-                    <option value="1cr-2cr">₹1 Cr - ₹2 Cr</option>
-                    <option value="2cr+">₹2 Cr+</option>
-                  </select>
-                </div>
-                <button
-                  onClick={handleSearch}
-                  className="h-12 bg-[#E63946] text-white rounded-lg hover:bg-[#d32f3d] transition-colors flex items-center justify-center gap-2"
-                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
-                >
-                  <Search className="w-5 h-5" />
-                  Search
-                </button>
-              </div>
-            </div>
+
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
@@ -118,14 +77,14 @@ export function HomePage() {
                 className="bg-[#E63946] text-white px-8 py-4 rounded-lg text-lg hover:bg-[#d32f3d] transition-colors inline-block"
                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
               >
-                Explore Properties
+                View Available Plots
               </Link>
               <a
                 href="#contact"
                 className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg text-lg hover:bg-white hover:text-[#1A1A1A] transition-colors inline-block"
                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
               >
-                Book Site Visit
+                Inquire About Land
               </a>
             </div>
           </div>
@@ -140,10 +99,10 @@ export function HomePage() {
               className="text-4xl text-[#1A1A1A] mb-4"
               style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
             >
-              Featured Properties
+              Top Investment Plots
             </h2>
             <p className="text-gray-600 text-lg">
-              Discover our handpicked selection of premium properties
+              Discover our handpicked selection of premium land & layouts
             </p>
           </div>
 
@@ -159,7 +118,7 @@ export function HomePage() {
               className="inline-block bg-[#1A1A1A] text-white px-8 py-4 rounded-lg text-lg hover:bg-[#E63946] transition-colors"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
             >
-              View All Properties
+              Explore All Plots
             </Link>
           </div>
         </div>
@@ -197,7 +156,7 @@ export function HomePage() {
                     >
                       {realtorInfo.propertiesSold}+
                     </div>
-                    <div className="text-gray-600 text-sm">Properties Sold</div>
+                    <div className="text-gray-600 text-sm">Units Sold</div>
                   </div>
                 </div>
               </div>
@@ -221,10 +180,10 @@ export function HomePage() {
 
               <div className="space-y-4 mb-8">
                 {[
-                  'Expert Market Knowledge',
-                  'Personalized Service',
-                  'Proven Track Record',
-                  'End-to-End Support',
+                  'Verified Land & Clear Titles',
+                  'Expert in Layout Approvals',
+                  'Strategic Investment Guidance',
+                  'Fast Documentation Support',
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <CheckCircle2 className="w-6 h-6 text-[#E63946] flex-shrink-0" />
@@ -238,7 +197,7 @@ export function HomePage() {
                 className="inline-block bg-[#E63946] text-white px-8 py-4 rounded-lg text-lg hover:bg-[#d32f3d] transition-colors"
                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
               >
-                Contact Me
+                Connect with Agent
               </a>
             </div>
           </div>
@@ -252,17 +211,17 @@ export function HomePage() {
             className="text-4xl md:text-5xl mb-6"
             style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
           >
-            Ready to Find Your Dream Home?
+            Ready to Find Your Perfect Plot?
           </h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Let me help you discover the perfect property that matches your lifestyle and budget
+            Let me help you secure a premium piece of land that matches your vision and budget
           </p>
           <a
             href="#contact"
             className="inline-block bg-[#E63946] text-white px-8 py-4 rounded-lg text-lg hover:bg-[#d32f3d] transition-colors"
             style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
           >
-            Schedule a Visit
+            Schedule Site Visit
           </a>
         </div>
       </section>

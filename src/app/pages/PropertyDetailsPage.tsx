@@ -260,19 +260,18 @@ export function PropertyDetailsPage() {
               {/* Config / Area / Price row */}
               <div className="grid grid-cols-3 gap-4 bg-[#F8F8F8] rounded-xl p-5 mb-6 border border-gray-100">
                 <div>
-                  <p className="text-xs text-gray-500 mb-1">Configurations</p>
+                  <p className="text-xs text-gray-500 mb-1">Land Category</p>
                   <p className="text-[#E63946] font-bold text-lg" style={{ fontFamily: 'Poppins, sans-serif' }}>
                     {property.propertyType}
-                    {property.bedrooms > 0 ? ` · ${property.bedrooms}BHK` : ''}
                   </p>
                   <p className="text-xs text-gray-500">Type</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500 mb-1">Ranging From</p>
+                  <p className="text-xs text-gray-500 mb-1">Total Area</p>
                   <p className="text-[#1A1A1A] font-bold text-lg" style={{ fontFamily: 'Poppins, sans-serif' }}>
                     {property.area.toLocaleString()} sq.ft
                   </p>
-                  <p className="text-xs text-gray-500">Super Built-up Area</p>
+                  <p className="text-xs text-gray-500">Plot Area</p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Price</p>

@@ -12,10 +12,8 @@ export function AdminAddProperty() {
     location: '',
     area: '',
     type: 'For Sale',
-    propertyType: 'Flat',
-    bedrooms: '',
-    bathrooms: '',
-    status: 'Ready to Move',
+    propertyType: 'Plot',
+    status: 'Available',
     possessionDate: '',
     units: '',
     projectSize: '',
@@ -58,10 +56,8 @@ export function AdminAddProperty() {
       location: '',
       area: '',
       type: 'For Sale',
-      propertyType: 'Flat',
-      bedrooms: '',
-      bathrooms: '',
-      status: 'Ready to Move',
+      propertyType: 'Plot',
+      status: 'Available',
       possessionDate: '',
       units: '',
       projectSize: '',
@@ -173,16 +169,14 @@ export function AdminAddProperty() {
 
           {/* Property Type */}
           <div>
-            <label className="block text-sm text-[#1A1A1A] mb-2">Property Type *</label>
+            <label className="block text-sm text-[#1A1A1A] mb-2">Land Category *</label>
             <select
               value={formData.propertyType}
-              onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, propertyType: e.target.value as 'Plot' })}
               className="w-full h-12 px-4 bg-[#F5F5F5] rounded-lg border-none outline-none"
               required
             >
-              <option value="Flat">Flat</option>
-              <option value="Villa">Villa</option>
-              <option value="Plot">Plot</option>
+              <option value="Plot">Plot / Land</option>
             </select>
           </div>
 
@@ -215,31 +209,7 @@ export function AdminAddProperty() {
             </select>
           </div>
 
-          {/* Bedrooms */}
-          <div>
-            <label className="block text-sm text-[#1A1A1A] mb-2">Bedrooms</label>
-            <Input
-              type="number"
-              placeholder="e.g., 3"
-              value={formData.bedrooms}
-              onChange={(e) => setFormData({ ...formData, bedrooms: e.target.value })}
-              className="h-12 bg-[#F5F5F5] border-none"
-              min="0"
-            />
-          </div>
 
-          {/* Bathrooms */}
-          <div>
-            <label className="block text-sm text-[#1A1A1A] mb-2">Bathrooms</label>
-            <Input
-              type="number"
-              placeholder="e.g., 3"
-              value={formData.bathrooms}
-              onChange={(e) => setFormData({ ...formData, bathrooms: e.target.value })}
-              className="h-12 bg-[#F5F5F5] border-none"
-              min="0"
-            />
-          </div>
 
           {/* RERA Number */}
           <div>
@@ -454,10 +424,8 @@ export function AdminAddProperty() {
                 location: '',
                 area: '',
                 type: 'For Sale',
-                propertyType: 'Flat',
-                bedrooms: '',
-                bathrooms: '',
-                status: 'Ready to Move',
+                propertyType: 'Plot',
+                status: 'Available',
                 possessionDate: '',
                 units: '',
                 projectSize: '',
