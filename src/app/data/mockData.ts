@@ -1,5 +1,11 @@
 // Mock data for the real estate website
 
+import tambaramImage from '@/assets/plots/tambaram_residential.png';
+import ecrImage from '@/assets/plots/ecr_oceanview.png';
+import omrImage from '@/assets/plots/omr_gated.png';
+import adyarImage from '@/assets/plots/adyar_luxury.png';
+import sholinganallurImage from '@/assets/plots/sholinganallur_commercial.png';
+
 export interface AmenityItem {
   name: string;
   image: string;
