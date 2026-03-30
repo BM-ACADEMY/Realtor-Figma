@@ -11,7 +11,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300">
       {/* Image */}
-      <div className="relative h-64 overflow-hidden group">
+      <Link to={`/properties/${property.id}`} className="relative h-64 overflow-hidden group block cursor-pointer">
         <img
           src={property.image}
           alt={property.title}
@@ -29,7 +29,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
             {property.type}
           </span>
         </div>
-      </div>
+      </Link>
 
       {/* Content */}
       <div className="p-6">
@@ -47,12 +47,14 @@ export function PropertyCard({ property }: PropertyCardProps) {
         </div>
 
         {/* Title */}
-        <h3
-          className="text-xl text-[#1A1A1A] mb-2 line-clamp-2"
-          style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
-        >
-          {property.title}
-        </h3>
+        <Link to={`/properties/${property.id}`}>
+          <h3
+            className="text-xl text-[#1A1A1A] mb-2 line-clamp-2 hover:text-[#E63946] transition-colors cursor-pointer"
+            style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
+          >
+            {property.title}
+          </h3>
+        </Link>
 
         {/* Location */}
         <div className="flex items-center gap-2 text-gray-600 mb-4">
