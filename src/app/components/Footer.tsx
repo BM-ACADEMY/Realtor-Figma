@@ -17,7 +17,7 @@ export function Footer() {
               <span className="text-white">earth properties</span>
             </h3>
             <p className="text-gray-400 mb-6">
-              Your trusted partner in finding the perfect property in Dubai.
+              Your trusted partner in finding the perfect property in Chennai.
             </p>
             <div className="flex gap-4">
               <a
@@ -25,6 +25,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#E63946] transition-colors"
+                aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </a>
@@ -33,6 +34,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#E63946] transition-colors"
+                aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>
@@ -41,6 +43,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#E63946] transition-colors"
+                aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
@@ -49,6 +52,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-[#E63946] transition-colors"
+                aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
               </a>
@@ -87,6 +91,14 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  to="/#testimonials"
+                  className="text-gray-400 hover:text-[#E63946] transition-colors"
+                >
+                  Testimonials
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/#contact"
                   className="text-gray-400 hover:text-[#E63946] transition-colors"
                 >
@@ -105,11 +117,21 @@ export function Footer() {
               Services
             </h4>
             <ul className="space-y-3 text-gray-400">
-              <li>Buy Property</li>
-              <li>Sell Property</li>
-              <li>Rent Property</li>
-              <li>Property Management</li>
-              <li>Investment Consulting</li>
+              <li>
+                <Link to="/properties" className="hover:text-[#E63946] transition-colors">Buy Property</Link>
+              </li>
+              <li>
+                <Link to="/#contact" className="hover:text-[#E63946] transition-colors">Sell Property</Link>
+              </li>
+              <li>
+                <Link to="/properties" className="hover:text-[#E63946] transition-colors">Rent Property</Link>
+              </li>
+              <li>
+                <Link to="/#contact" className="hover:text-[#E63946] transition-colors">Property Management</Link>
+              </li>
+              <li>
+                <Link to="/#contact" className="hover:text-[#E63946] transition-colors">Investment Consulting</Link>
+              </li>
             </ul>
           </div>
 
@@ -124,15 +146,15 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-gray-400">
                 <Phone className="w-5 h-5 text-[#E63946] flex-shrink-0 mt-1" />
-                <span>{realtorInfo.phone}</span>
+                <a href={`tel:${realtorInfo.phone}`} className="hover:text-white transition-colors">{realtorInfo.phone}</a>
               </li>
               <li className="flex items-start gap-3 text-gray-400">
                 <Mail className="w-5 h-5 text-[#E63946] flex-shrink-0 mt-1" />
-                <span>{realtorInfo.email}</span>
+                <a href={`mailto:${realtorInfo.email}`} className="hover:text-white transition-colors">{realtorInfo.email}</a>
               </li>
               <li className="flex items-start gap-3 text-gray-400">
                 <MapPin className="w-5 h-5 text-[#E63946] flex-shrink-0 mt-1" />
-                <span>Dubai, United Arab Emirates</span>
+                <span>{realtorInfo.address || 'Chennai, Tamil Nadu, India'}</span>
               </li>
             </ul>
           </div>

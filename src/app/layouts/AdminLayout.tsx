@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router';
 import { LayoutDashboard, Home, Plus, Users, Calendar, Image, Settings, LogOut } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { ScrollToTopButton } from '../components/ScrollToTopButton';
 
 export function AdminLayout() {
   const location = useLocation();
@@ -21,6 +22,14 @@ export function AdminLayout() {
     localStorage.removeItem('adminAuth');
     navigate('/admin/login');
   };
+
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTop = 0;
+    }
+  }, [location.pathname]);
 
   if (!isAuthenticated) {
     return null;
@@ -78,8 +87,9 @@ export function AdminLayout() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto">
+      <main ref={mainRef} className="flex-1 overflow-auto relative">
         <Outlet />
+        <ScrollToTopButton scrollContainerRef={mainRef} />
       </main>
     </div>
   );
