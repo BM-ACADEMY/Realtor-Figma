@@ -1,33 +1,21 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import { Award, CheckCircle2, Star, Phone, Mail, Send } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Award, CheckCircle2, Star, Phone, Mail, Send, ArrowRight } from 'lucide-react';
 import { PropertyCard } from '../components/PropertyCard';
 import { properties, testimonials, realtorInfo } from '../data/mockData';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { toast } from 'sonner';
 
+// Hero Assets
+import mainHouse from '@/assets/hero/hero_house.png';
+import handshakeImg from '@/assets/hero/handshake.png';
+import archDetailImg from '@/assets/hero/arch_detail.png';
+import blueprintImg from '@/assets/hero/blueprint.png';
+
 export function HomePage() {
-  const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const [contactForm, setContactForm] = useState({ name: '', phone: '', message: '' });
-
-  const heroImages = [
-    'https://images.unsplash.com/photo-1706808849827-7366c098b317?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBtb2Rlcm4lMjBob3VzZSUyMGV4dGVyaW9yfGVufDF8fHx8MTc3NDg0OTYzNnww&ixlib=rb-4.1.0&q=80&w=1920',
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&h=1080&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1920&h=1080&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920&h=1080&fit=crop&q=80',
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentBgIndex((prev) => (prev + 1) % heroImages.length);
-    }, 5000); // 5 seconds
-    return () => clearInterval(timer);
-  }, []);
-
-  const featuredProperties = properties.filter((p) => p.featured);
-
-
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,58 +23,120 @@ export function HomePage() {
     setContactForm({ name: '', phone: '', message: '' });
   };
 
+  const featuredProperties = properties.filter((p) => p.featured);
+
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[600px] md:h-[700px] overflow-hidden flex items-center">
-        {/* Background Carousel */}
-        <div className="absolute inset-0 z-0">
-          {heroImages.map((img, idx) => (
-            <div
-              key={img}
-              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-[2000ms] ease-in-out ${
-                idx === currentBgIndex ? 'opacity-100 z-10 scale-100' : 'opacity-0 z-0 scale-110'
-              }`}
-              style={{
-                backgroundImage: `url('${img}')`,
-              }}
-            />
-          ))}
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-20" />
-        </div>
+    <div className="min-h-screen bg-white">
+      {/* Dynamic Dribbble Hero Section */}
+      <section className="relative min-h-[900px] flex items-center pt-24 overflow-hidden">
+        {/* Main Geometric Background Layer */}
+        <div 
+          className="absolute inset-0 bg-[#E63946] clip-dribbble-hero z-0 shadow-2xl"
+          style={{ originY: 0 }}
+        />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-30">
-          <div className="text-center text-white mb-12">
-            <h1
-              className="text-5xl md:text-6xl mb-6"
-              style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
+        {/* Decorative Dotted Grids */}
+        <div 
+          className="absolute top-40 left-20 w-40 h-40 opacity-20 z-10"
+          style={{ backgroundImage: 'radial-gradient(circle, white 2px, transparent 0)', backgroundSize: '20px 20px' }}
+        />
+        <div 
+          className="absolute bottom-60 right-1/4 w-32 h-32 opacity-20 z-10"
+          style={{ backgroundImage: 'radial-gradient(circle, white 2px, transparent 0)', backgroundSize: '16px 16px' }}
+        />
+
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 w-full relative z-20 flex flex-col lg:flex-row items-center lg:items-start pt-12">
+          {/* Left Content Column */}
+          <div className="lg:w-1/2 text-white mt-10">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              Build Your Dream Home
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-200 mb-8">
-              Buy & Sell Verified Plots with the Trusted Land Expert
-            </p>
-
-
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-              <Link
-                to="/properties"
-                className="bg-[#E63946] text-white px-8 py-4 rounded-lg text-lg hover:bg-[#d32f3d] transition-colors inline-block"
-                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
+              <h1
+                className="text-6xl lg:text-8xl leading-[1.1] mb-8"
+                style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800 }}
               >
-                View Available Plots
-              </Link>
-              <a
-                href="#contact"
-                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg text-lg hover:bg-white hover:text-[#1A1A1A] transition-colors inline-block"
-                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
-              >
-                Inquire About Land
-              </a>
-            </div>
+                Buy or sell<br />
+                your plot with<br />
+                <span className="text-white/90">RedEarth</span>
+              </h1>
+              
+              <div className="flex flex-col gap-6 max-w-md">
+                <p className="text-xl text-white/80 font-medium tracking-wide">
+                  Learn more about our services
+                </p>
+                <div className="flex flex-wrap gap-4 pt-2">
+                  <Link
+                    to="/properties"
+                    className="bg-[#111111] text-white px-10 py-5 rounded-md text-lg font-bold hover:bg-black transition-all transform hover:-translate-y-1 shadow-xl flex items-center gap-3"
+                  >
+                    Buying
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                  <a
+                    href="#contact"
+                    className="bg-[#FF7F50] text-white px-10 py-5 rounded-md text-lg font-bold hover:bg-[#e66c42] transition-all transform hover:-translate-y-1 shadow-xl"
+                  >
+                    Selling
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Imagery Column */}
+          <div className="lg:w-1/2 relative mt-20 lg:mt-0">
+            {/* Main Hero House Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, ease: 'easeOut' }}
+              className="relative z-20"
+            >
+              <img 
+                src={mainHouse} 
+                alt="Modern Architecture" 
+                className="w-full h-auto drop-shadow-[0_35px_35px_rgba(0,0,0,0.4)]"
+              />
+            </motion.div>
+
+            {/* Floating Floating Hexagon 1 (Handshake) */}
+            <motion.div
+              animate={{ y: [0, -20, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+              className="absolute -top-10 -right-5 w-48 h-48 z-30"
+            >
+              <div className="clip-hexagon bg-white p-2 shadow-2xl">
+                <img src={handshakeImg} className="w-full h-full object-cover clip-hexagon" />
+              </div>
+            </motion.div>
+
+            {/* Floating Floating Hexagon 2 (Arch Detail) */}
+            <motion.div
+              animate={{ y: [0, 20, 0] }}
+              transition={{ repeat: Infinity, duration: 5, delay: 0.5, ease: "easeInOut" }}
+              className="absolute -bottom-20 right-10 w-40 h-40 z-30"
+            >
+              <div className="clip-hexagon bg-[#FF7F50] p-1.5 shadow-2xl">
+                <div className="clip-hexagon bg-white w-full h-full p-1.5">
+                  <img src={archDetailImg} className="w-full h-full object-cover clip-hexagon" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating Hexagon 3 (Architectural Blueprint) */}
+            <motion.div
+              animate={{ x: [0, -15, 0] }}
+              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+              className="absolute top-1/2 -left-12 w-32 h-32 z-30"
+            >
+              <div className="clip-hexagon bg-[#E63946] p-1.5 shadow-2xl">
+                <div className="clip-hexagon bg-white w-full h-full p-1.5">
+                  <img src={blueprintImg} className="w-full h-full object-cover clip-hexagon" />
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

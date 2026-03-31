@@ -1,96 +1,102 @@
 import { Link, useLocation } from 'react-router';
-import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, X, Home } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 export function Header() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
-    { path: '/', label: 'Home' },
-    { path: '/properties', label: 'Properties' },
-    { path: '/#about', label: 'About Us' },
+    { path: '/', label: 'HOME' },
+    { path: '/properties', label: 'PROPERTIES' },
+    { path: '/#about', label: 'ABOUT' },
+    { path: '/#contact', label: 'CONTACT' },
   ];
 
+  const isHome = location.pathname === '/';
+  const isSolid = scrolled || !isHome;
+
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isSolid ? 'bg-white shadow-md py-4' : 'bg-transparent py-6'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 sm:px-10">
+        <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center gap-2 group">
+            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+              <Home className="w-6 h-6 text-[#E63946]" strokeWidth={2.5} />
+            </div>
             <span
-              className="text-2xl"
-              style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700 }}
+              className={`text-2xl tracking-tighter ${isSolid ? 'text-[#1A1A1A]' : 'text-white'}`}
+              style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 600 }}
             >
-              <span className="text-[#E63946]">Red</span>
-              <span className="text-[#1A1A1A]">earth properties</span>
+              <span className={isSolid ? 'text-[#E63946]' : 'text-white'}>Red</span>earth properties
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`transition-colors ${
-                  location.pathname === item.path
-                    ? 'text-[#E63946]'
-                    : 'text-[#1A1A1A] hover:text-[#E63946]'
-                }`}
-                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Link
-              to="/#contact"
-              className="bg-[#E63946] text-white px-6 py-3 rounded-lg hover:bg-[#d32f3d] transition-colors"
-              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
-            >
-              Contact Me
-            </Link>
-          </nav>
+          {/* Desktop/Tablet Inline Toggle Navigation */}
+          <div className="flex items-center gap-6 overflow-hidden">
+            <AnimatePresence>
+              {mobileMenuOpen && (
+                <motion.nav
+                  initial={{ opacity: 0, x: 50, width: 0 }}
+                  animate={{ opacity: 1, x: 0, width: 'auto' }}
+                  exit={{ opacity: 0, x: 50, width: 0 }}
+                  className="flex items-center gap-8 mr-4"
+                  transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                >
+                  {navItems.map((item, index) => (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * 0.05 + 0.1 }}
+                    >
+                      <Link
+                        to={item.path}
+                        className={`text-xs tracking-[0.2em] font-bold transition-all hover:opacity-70 whitespace-nowrap ${
+                          isSolid ? 'text-[#1A1A1A]' : 'text-white'
+                        }`}
+                        style={{ fontFamily: 'Inter, sans-serif' }}
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </motion.nav>
+              )}
+            </AnimatePresence>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6 text-[#1A1A1A]" />
-            ) : (
-              <Menu className="w-6 h-6 text-[#1A1A1A]" />
-            )}
-          </button>
+            {/* Navigation Toggle Button */}
+            <button
+              className={`flex items-center gap-2 py-2 px-4 rounded-full transition-all duration-300 ${
+                isSolid 
+                  ? 'bg-[#E63946] text-white hover:bg-black' 
+                  : 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-md'
+              }`}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              <span className="text-xs font-bold tracking-[0.2em] ml-1">
+                {mobileMenuOpen ? 'CLOSE' : 'MENU'}
+              </span>
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
+          </div>
         </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-gray-200">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`block py-3 ${
-                  location.pathname === item.path
-                    ? 'text-[#E63946]'
-                    : 'text-[#1A1A1A]'
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Link
-              to="/#contact"
-              className="block bg-[#E63946] text-white px-6 py-3 rounded-lg text-center mt-4"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Contact Me
-            </Link>
-          </nav>
-        )}
       </div>
     </header>
   );
